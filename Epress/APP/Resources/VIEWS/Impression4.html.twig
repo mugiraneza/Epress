@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body%}
+    <body onload="window.print();">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{{ path('addPan') }}" class="logo"><b>Refaire une autre Facture</b></a>
+        <!-- Header Navbar: style can be found in header.less -->
+    </header>
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="page-header">
+                        <img src=" {{ asset('image/logo.png') }}" style="width: 70px;">
+                        <b>KPELLY CENTER</b>
+                    </h2>
+
+                </div><!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <h4> Recu de Soin</h4>
+                    <address style="width: 2000px" >
+                        CONTACT: +228 90 49 18 38
+                    </address>
+                </div><!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+
+                </div><!-- /.col -->
+                <div class="col-sm-4 invoice-col" >
+                    <br>
+                    <div>   date:<br> {{ date|date('d-m-Y') }} </div>
+                    <br>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-striped" border="1">
+
+                        <thead>
+                        {% set compteur=0 %}
+                        <tr >
+                            <th>Soin</th>
+                            <th>Prix</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for P in pans %}
+
+                            {% if P.etat == 0  and P.date|date('d-m-Y')==date|date('d-m-Y') %}
+                                <tr>
+                                    <td>{{ P.Soin.nom }}</td>
+                                    <td>{{ P.Soin.prix }}</td>
+                                    {% set compteur=compteur+  P.Soin.prix  %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-xs-6">
+                    <p>Total Montant:  <span> {{ compteur }} </span></p>
+                    {# {% if compteur==0 %}
+                             {% redirect "homepage" %}
+                         {% endif %}#}
+                </div><!-- /.col -->
+                <div class="col-xs-6">
+                    <p> </p>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+
+            <div class="row">
+
+                <center>  <h6 style="font-style: italic" >  Rue Akrowa Doulassame Amoutive Lome </h6> </center>
+            </div><!-- /.row -->
+        </section><!-- /.content -->
+    </div><!-- ./wrapper -->
+
+    </body>
+
+
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="row">
+                <div class="col-md-12 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {% for message in app.flashes('notice') %}
+                                <div class="alert alert-info alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                                    <h3><br>
+                                        <center>
+                                            {{ message }}
+                                        </center>
+
+                                    </h3>
+
+                                </div>
+                            {% endfor %}
+                            Depot de Linges
+                          {# <label class="pull-right inline">
+                                <small class="muted smaller-90">TVA</small>
+                                <input id="id-button-borders"  type="checkbox" >
+                                <span class="lbl middle"></span>
+                            </label>#}
+                        </div>
+                        <div class="panel-body">
+                            <ul class="nav nav-pills">
+                                <li class="active"><a href="#depot" data-toggle="tab">Depot</a>
+                                </li>
+                                <li class=""><a href="#client" data-toggle="tab">Client</a>
+                                </li>
+                                <li class=""><a href="#linge" data-toggle="tab">Linge</a>
+                                </li>
+                                <li class=""><a href="#couleur" data-toggle="tab">Couleur</a>
+                                </li>
+                                <li class=""><a href="#tissu" data-toggle="tab">Tissu</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade  active in" id="depot">
+                                    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;margin-bottom: 5%;">
+                                        {{ form_start(form,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(form) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(form) }}
+                                    </div>
+                                    <h3>
+                                    {% set c=0 %}
+                                    {% set v=0 %}
+                                 Liste des Depots par
+                                        {% for client in clients %}
+                                            {% if client.id == id and c==0  %}
+                                                {{ client.NomPrenom }} {% set c=c+1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                                    {% for Depot in Depots %}
+                                                        {% if Depot.client.id == id  and (Depot.statut=='En traitement' or Depot.statut=='Partiellement solde') %}
+                                                            {% set v=v+1 %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                        {% if v > 0 %}
+                                            <a href="{{ path('Imp',{'id':id}) }}"  >
+                                        <button class="button btn-circle" style=";margin-left: 10px;background-color: rgb(127, 224, 153);box-shadow: 0px 0px 10px 1px rgba(201, 201, 201, 0.61); "><i class="fa fa-print fa-2x"></i></button>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#paiement" href="#">
+                                                <button class="button btn-circle" style=";margin-left: 10px;background-color: rgb(127, 224, 153);box-shadow: 0px 0px 10px 1px rgba(201, 201, 201, 0.61); "><i class="fa fa-money fa-2x"></i></button>
+                                            </a>
+
+                                        {% endif %}
+
+                                    </h3>
+                                    {% set compo=0 %}
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover" id="example">
+                                                    <thead>
+                                                    <tr>
+
+                                                        <th>Linge</th>
+                                                        <th>Quantite</th>
+                                                        <th>prix</th>
+                                                        <th>Statut</th>
+                                                        <th>Avance</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for Depot in Depots %}
+
+                                                        {% if Depot.client.id == id and (Depot.statut=='En traitement' or Depot.statut=='Partiellement solde') %}
+                                                        <tr>
+
+                                                                <td>{{ Depot.Linge.libelle }} {{ Depot.couleur.libelle }} en {{ Depot.tissu.libelle }}</td>
+                                                                <td>{{ Depot.quantite }}</td>
+                                                                <td>{{ Depot.prix }}</td>
+                                                                <td>{{ Depot.statut }}</td>
+                                                                <td>{{ Depot.avance }} </td>
+                                                                <td>
+                                                                    <a  href="{{ path('edDepot',{'depot':Depot.id,'id':id} ) }}"><button class="btn btn-primary" type="submit" ><i class="glyphicon glyphicon-edit icon-white"></i>Modifier</button></a>
+                                                                    <a  href="{{ path('supde2',{'id':Depot.id}) }}" onclick="return confirm('confirmez?')" ><button class="btn btn-danger" type="submit" ><i class="glyphicon glyphicon-trash icon-white"></i>Supprimer</button></a>
+
+                                                                </td>
+                                                            {% if Depot.avance==0 %}
+                                                            {% set compo=compo+Depot.prix %}
+                                                                {% endif %}
+                                                            {% if Depot.avance!=0 %}
+                                                                {% set compo=compo+Depot.prix-Depot.avance %}
+                                                            {% endif %}
+                                                        </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+                                    <div class="modal fade product_view" id="paiement">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                                                    <h3 class="modal-title">Saisir Votre Montant</h3>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <section class="content">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="box">
+                                                                    <div class="box-header">
+                                                                        <h3 class="box-title">Le Total a regle est de {{ compo }}</h3>
+                                                                    </div><!-- /.box-header -->
+                                                                    <div class="box-body">
+                                                                        <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+                                                                            {{ form_start(formulaire,{'attr': {'v':'v' }}) }}
+                                                                            {{ form_widget(formulaire) }}
+                                                                            <center>
+                                                                                <button type="submit" class="btn btn-primary">valider</button>
+                                                                                <button type="reset" class="btn btn-default">annuler</button></center>
+                                                                            {{ form_end(formulaire) }}
+                                                                        </div>
+
+                                                                    </div><!-- /.box-body -->
+                                                                </div><!-- /.box -->
+                                                            </div><!-- /.col -->
+                                                        </div><!-- /.row -->
+                                                    </section><!-- /.content -->
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="tab-pane fade" id="client">
+                                    <br>
+                                    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+                                        {{ form_start(clientform,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(clientform) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(clientform) }}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="linge">
+                                    <br>
+                                    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+                                        {{ form_start(lingeform,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(lingeform) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(lingeform) }}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="couleur">
+                                    <br>
+                                    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+                                        {{ form_start(couleurform,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(couleurform) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(couleurform) }}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tissu">
+                                    <br>
+                                    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+                                        {{ form_start(tissuform,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(tissuform) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(tissuform) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+{% endblock %}

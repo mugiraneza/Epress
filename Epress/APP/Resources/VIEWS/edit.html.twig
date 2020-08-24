@@ -1,0 +1,32 @@
+
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="col-md-6" style="margin-left: 25%;margin-right: 25%;">
+        <!-- Form Elements -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Modification d'un Utilisateur
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                        <div class="form-group">
+
+                            {{ form_start(edit_form) }}
+                            {{ form_widget(edit_form) }}
+                            <center>
+                                <button type="submit" class="btn btn-primary">valider</button>
+                                <button type="reset" class="btn btn-default">annuler</button></center>
+                            {{ form_end(edit_form) }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Form Elements -->
+    </div>
+{% endblock %}

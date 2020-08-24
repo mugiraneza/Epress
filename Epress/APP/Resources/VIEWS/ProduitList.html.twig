@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+
+                    <h3><br>
+                        <center>
+                            {{ message }}
+                        </center>
+
+                    </h3>
+
+                </div>
+            {% endfor %}
+            <h3>
+                Liste des Produits</h3>
+            <div >
+                <br>
+                <a data-toggle="modal" data-target="#type" href="#"><button type="submit" >Nouveau Produit</button></a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="example">
+                    <thead>
+                    <tr>
+                        <th>Nom du Produit</th>
+                        <th>Prix</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for P in ProduitS %}
+                        <tr>
+                            <td>{{ P.nom }}</td>
+                            <td>{{ P.prix }}</td>
+                            <td>
+                                <a  href="{{ path('edit_Produit',{'id':P.id}) }}"><button class="btn btn-primary" type="submit" ><i class="glyphicon glyphicon-edit icon-white"></i>Modifier</button></a>
+                                <a  href="{{ path('supprimer_Produit',{'id':P.id}) }}" onclick="return confirm('confirmez?')" ><button class="btn btn-danger" type="submit" ><i class="glyphicon glyphicon-trash icon-white"></i>Supprimer</button></a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade product_view" id="type">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                    <h3 class="modal-title">Enregistrer un nouveau Produit</h3>
+                </div>
+
+                <div class="modal-body">
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-body">
+                                        {{ form_start(form,{'attr': {'v':'v' }}) }}
+                                        {{ form_widget(form) }}
+                                        <center>
+                                            <button type="submit" class="btn btn-primary">valider</button>
+                                            <button type="reset" class="btn btn-default">annuler</button></center>
+                                        {{ form_end(form) }}
+                                    </div><!-- /.box-body -->
+
+                                </div><!-- /.box -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </section><!-- /.content -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

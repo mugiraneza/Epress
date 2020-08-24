@@ -1,0 +1,280 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    {% set compteur=0 %}
+    {% for stat in Statistiques %}
+
+            {% set compteur=compteur+stat.montant %}
+    {% endfor %}
+
+    {% set compteur2=0 %}
+    {% for stat2 in Statistiques2 %}
+
+        {% set compteur2=compteur2+stat2.montant %}
+    {% endfor %}
+
+    {% set compteur3=0 %}
+    {% for stat2 in Statistiques3 %}
+
+        {% set compteur3=compteur3+stat2.montant %}
+    {% endfor %}
+
+    {% set compteur4=0 %}
+    {% for stat2 in Statistiques4 %}
+
+        {% set compteur4=compteur4+stat2.montant %}
+    {% endfor %}
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="box-title">Informations</h3>
+                        <div class=" pull-right" style="margin-top: -30px;">
+                            <div class="label bg-aqua">Statiques du Jour</div>
+                        </div>
+                    </div>
+
+                    <center>
+                        <div style="margin: 10px;margin-top: 5%">
+
+                            <a href="{{ path('Statistique') }}"><button class="btn btn-primary" type="submit" >Recommencer</button></a>
+
+                        </div>
+                    </center>
+                    <center>
+                        <h1>Statistiques Pressing</h1>
+                        <h2>  <p> Le chiffre d'affaire du pressing de la periode du {{ prec|date('d-m-Y') }}  au {{ fin|date('d-m-Y') }} est de <b> {{ compteur }} </b> Francs </p>
+                        </h2>  </center>
+                    <br><br>
+                    <div class="box-body">
+                        <table id="example" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Chiffre d'affaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stat in Statistiques %}
+                                <tr>
+                                    <td>{{stat.date|date('d-m-Y')}}</td>
+                                    <td>{{stat.Montant }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart" style="height: 300px;"></div>
+
+                    </div><!-- /.box-body -->
+
+                    <center>
+                        <h1>Statistiques Lavage Par Kilo</h1>
+                        <h2>
+                            <p>
+                                Le chiffre d'affaire du Lavage par Kilo de la periode du {{ prec|date('d-m-Y') }}  au {{ fin|date('d-m-Y') }} est de <b> {{ compteur2 }} </b> Francs
+                            </p>
+                        </h2>
+                    </center>
+                    <br><br>
+                    <div class="box-body">
+                        <table id="example3" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Chiffre d'affaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stat in Statistiques2 %}
+                                <tr>
+                                    <td>{{stat.date|date('d-m-Y')}}</td>
+                                    <td>{{stat.Montant }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart2" style="height: 300px;"></div>
+
+                    </div><!-- /.box-body -->
+
+                    <center>
+                        <h1>Statistiques Lavage du shopping</h1>
+                        <h2>
+                            <p>
+                                Le chiffre d'affaire du Shopping de la periode du {{ prec|date('d-m-Y') }}  au {{ fin|date('d-m-Y') }} est de <b> {{ compteur3 }} </b> Francs
+                            </p>
+                        </h2>
+                    </center>
+                    <br><br>
+                    <div class="box-body">
+                        <table id="example4" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Chiffre d'affaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stat in Statistiques3 %}
+                                <tr>
+                                    <td>{{stat.date|date('d-m-Y')}}</td>
+                                    <td>{{stat.Montant }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart3" style="height: 300px;"></div>
+
+                    </div><!-- /.box-body -->
+
+
+                    <center>
+                        <h1>Statistiques Salon</h1>
+                        <h2>
+                            <p>
+                                Le chiffre d'affaire du Salon de la periode du {{ prec|date('d-m-Y') }}  au {{ fin|date('d-m-Y') }} est de <b> {{ compteur4 }} </b> Francs
+                            </p>
+                        </h2>
+                    </center>
+                    <br><br>
+                    <div class="box-body">
+                        <table id="example5" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Chiffre d'affaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stat in Statistiques3 %}
+                                <tr>
+                                    <td>{{stat.date|date('d-m-Y')}}</td>
+                                    <td>{{stat.Montant }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="box-body chart-responsive">
+                        <div class="chart" id="bar-chart4" style="height: 300px;"></div>
+
+                    </div><!-- /.box-body -->
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+
+    </section><!-- /.content -->
+
+
+
+{% endblock %}
+
+{% block script %}
+    <!-- page script -->
+    <script type="text/javascript">
+        $(function () {
+            "use strict";
+            //BAR CHART
+            var bar = new Morris.Bar({
+                element: 'bar-chart',
+                resize: true,
+                data: [
+                    {% for stat in Statistiques  %}
+
+                    {% if ( prec )  <=  ( stat.date) %}
+                    {y: ' {{ stat.date|date('d-m-Y') }}', a: {{ stat.Montant }} },
+
+                    {% endif %}  {% endfor %}],
+                barColors: ['#d9edf6'],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Vente'],
+                hideHover: 'auto'
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            "use strict";
+            //BAR CHART
+            var bar2 = new Morris.Bar({
+                element: 'bar-chart2',
+                resize: true,
+                data: [
+                    {% for stat in Statistiques2  %}
+
+                    {% if ( prec )  <=  ( stat.date) %}
+                    {y: ' {{ stat.date|date('d-m-Y') }}', a: {{ stat.Montant }} },
+
+                    {% endif %}  {% endfor %}],
+                barColors: ['#d9edc6'],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Vente'],
+                hideHover: 'auto'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            "use strict";
+            //BAR CHART
+            var bar3 = new Morris.Bar({
+                element: 'bar-chart3',
+                resize: true,
+                data: [
+                    {% for stat in Statistiques3  %}
+
+                    {% if ( prec )  <=  ( stat.date) %}
+                    {y: ' {{ stat.date|date('d-m-Y') }}', a: {{ stat.Montant }} },
+
+                    {% endif %}  {% endfor %}],
+                barColors: ['#d9ddd2'],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Vente'],
+                hideHover: 'auto'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            "use strict";
+            //BAR CHART
+            var bar4 = new Morris.Bar({
+                element: 'bar-chart4',
+                resize: true,
+                data: [
+                    {% for stat in Statistiques4  %}
+
+                    {% if ( prec )  <=  ( stat.date) %}
+                    {y: ' {{ stat.date|date('d-m-Y') }}', a: {{ stat.Montant }} },
+
+                    {% endif %}  {% endfor %}],
+                barColors: ['#d9aaa2'],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Vente'],
+                hideHover: 'auto'
+            });
+        });
+    </script>
+{% endblock %}
